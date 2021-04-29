@@ -1,9 +1,9 @@
 <?php
 
-class WishesItemGetProcessor extends modObjectGetProcessor
+class WishesGetProcessor extends modObjectGetProcessor
 {
-    public $objectType = 'WishesItem';
-    public $classKey = 'WishesItem';
+    public $objectType = 'WishesItems';
+    public $classKey = 'WishesItems';
     public $languageTopics = ['wishes:default'];
     //public $permission = 'view';
 
@@ -25,4 +25,4 @@ class WishesItemGetProcessor extends modObjectGetProcessor
 
 }
 
-return 'WishesItemGetProcessor';
+return 'WishesGetProcessor';

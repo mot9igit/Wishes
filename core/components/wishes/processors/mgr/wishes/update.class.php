@@ -1,9 +1,9 @@
 <?php
 
-class WishesItemUpdateProcessor extends modObjectUpdateProcessor
+class WishesUpdateProcessor extends modObjectUpdateProcessor
 {
-    public $objectType = 'WishesItem';
-    public $classKey = 'WishesItem';
+    public $objectType = 'WishesItems';
+    public $classKey = 'WishesItems';
     public $languageTopics = ['wishes'];
     //public $permission = 'save';
 
@@ -41,8 +41,28 @@ class WishesItemUpdateProcessor extends modObjectUpdateProcessor
             $this->modx->error->addField('name', $this->modx->lexicon('wishes_item_err_ae'));
         }
 
+		$this->setFieldDefaults();
+
         return parent::beforeSet();
     }
+
+	/**
+	 * Set defaults for the fields if values are not passed
+	 * @return mixed
+	 */
+	public function setFieldDefaults()
+	{
+		$scriptProperties = $this->getProperties();
+		if(empty($scriptProperties['editedon'])){
+			$scriptProperties['editedon'] = strftime('%Y-%m-%d %H:%M:%S');
+		}
+
+		if(empty($scriptProperties['editedby'])){
+			$scriptProperties['editedby'] = $this->modx->user->get('id');
+		}
+		$this->setProperties($scriptProperties);
+		return true;
+	}
 }
 
-return 'WishesItemUpdateProcessor';
+return 'WishesUpdateProcessor';

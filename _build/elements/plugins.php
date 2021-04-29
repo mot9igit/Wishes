@@ -5,7 +5,7 @@ return [
         'file' => 'wishes',
         'description' => '',
         'events' => [
-            'OnManagerPageInit' => [],
+            'msOnCreateOrder' => [],
         ],
     ],
 ];

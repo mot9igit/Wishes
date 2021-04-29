@@ -10,7 +10,7 @@ Wishes.grid.Items = function (config) {
         tbar: this.getTopBar(config),
         sm: new Ext.grid.CheckboxSelectionModel(),
         baseParams: {
-            action: 'mgr/item/getlist'
+            action: 'mgr/wishes/getlist'
         },
         listeners: {
             rowDblClick: function (grid, rowIndex, e) {
@@ -84,7 +84,7 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/item/get',
+                action: 'mgr/wishes/get',
                 id: id
             },
             listeners: {
@@ -125,7 +125,7 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
                 : _('wishes_item_remove_confirm'),
             url: this.config.url,
             params: {
-                action: 'mgr/item/remove',
+                action: 'mgr/wishes/remove',
                 ids: Ext.util.JSON.encode(ids),
             },
             listeners: {
@@ -147,7 +147,7 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
         MODx.Ajax.request({
             url: this.config.url,
             params: {
-                action: 'mgr/item/disable',
+                action: 'mgr/wishes/disable',
                 ids: Ext.util.JSON.encode(ids),
             },
             listeners: {
@@ -158,6 +158,22 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
                 }
             }
         })
+    },
+
+    exportItems: function () {
+        var ids = this._getSelectedIds();
+        if (!ids.length) {
+            return false;
+        }
+        window.open(this.config.url+'?action=export&ids='+ids+'&type=full');
+    },
+
+    exportItemsSmall: function () {
+        var ids = this._getSelectedIds();
+        if (!ids.length) {
+            return false;
+        }
+        window.open(this.config.url+'?action=export&ids='+ids+'&type=small');
     },
 
     enableItem: function () {
@@ -165,10 +181,12 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
         if (!ids.length) {
             return false;
         }
-        MODx.Ajax.request({
+        MODx.msg.confirm({
+            title: _('wishes_item_enable'),
+            text: _('wishes_item_enable_confirm'),
             url: this.config.url,
             params: {
-                action: 'mgr/item/enable',
+                action: 'mgr/wishes/enable',
                 ids: Ext.util.JSON.encode(ids),
             },
             listeners: {
@@ -178,11 +196,11 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
                     }, scope: this
                 }
             }
-        })
+        });
     },
 
     getFields: function () {
-        return ['id', 'name', 'description', 'active', 'actions'];
+        return ['id', 'name', 'description', 'createdon', 'endon','active', 'actions'];
     },
 
     getColumns: function () {
@@ -199,6 +217,16 @@ Ext.extend(Wishes.grid.Items, MODx.grid.Grid, {
         }, {
             header: _('wishes_item_description'),
             dataIndex: 'description',
+            sortable: false,
+            width: 250,
+        }, {
+            header: _('wishes_item_createdon'),
+            dataIndex: 'createdon',
+            sortable: false,
+            width: 250,
+        }, {
+            header: _('wishes_item_endon'),
+            dataIndex: 'endon',
             sortable: false,
             width: 250,
         }, {

@@ -1,9 +1,9 @@
 <?php
 
-class WishesItemEnableProcessor extends modObjectProcessor
+class WishesEnableProcessor extends modObjectProcessor
 {
-    public $objectType = 'WishesItem';
-    public $classKey = 'WishesItem';
+    public $objectType = 'WishesItems';
+    public $classKey = 'WishesItems';
     public $languageTopics = ['wishes'];
     //public $permission = 'save';
 
@@ -28,7 +28,21 @@ class WishesItemEnableProcessor extends modObjectProcessor
                 return $this->failure($this->modx->lexicon('wishes_item_err_nf'));
             }
 
+            $wishes = $this->modx->getCollection("WishesItems");
+            foreach($wishes as $wish){
+            	if($wish->get("active")){
+					$wish->set('active', false);
+					$wish->set('endon', strftime('%Y-%m-%d %H:%M:%S'));
+					$wish->set('editedon', strftime('%Y-%m-%d %H:%M:%S'));
+					$wish->set('editedby', $this->modx->user->get('id'));
+					$wish->save();
+				}
+
+			}
             $object->set('active', true);
+			$object->set('endon', null);
+			$object->set('editedon', strftime('%Y-%m-%d %H:%M:%S'));
+			$object->set('editedby', $this->modx->user->get('id'));
             $object->save();
         }
 
@@ -37,4 +51,4 @@ class WishesItemEnableProcessor extends modObjectProcessor
 
 }
 
-return 'WishesItemEnableProcessor';
+return 'WishesEnableProcessor';

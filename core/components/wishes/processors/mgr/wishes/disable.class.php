@@ -1,11 +1,11 @@
 <?php
 
-class WishesItemRemoveProcessor extends modObjectProcessor
+class WishesDisableProcessor extends modObjectProcessor
 {
-    public $objectType = 'WishesItem';
-    public $classKey = 'WishesItem';
+    public $objectType = 'WishesItems';
+    public $classKey = 'WishesItems';
     public $languageTopics = ['wishes'];
-    //public $permission = 'remove';
+    //public $permission = 'save';
 
 
     /**
@@ -28,12 +28,15 @@ class WishesItemRemoveProcessor extends modObjectProcessor
                 return $this->failure($this->modx->lexicon('wishes_item_err_nf'));
             }
 
-            $object->remove();
+            $object->set('active', false);
+			$object->set('endon', strftime('%Y-%m-%d %H:%M:%S'));
+			$object->set('editedon', strftime('%Y-%m-%d %H:%M:%S'));
+			$object->set('editedby', $this->modx->user->get('id'));
+            $object->save();
         }
 
         return $this->success();
     }
-
 }
 
-return 'WishesItemRemoveProcessor';
+return 'WishesDisableProcessor';

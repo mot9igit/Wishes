@@ -1,9 +1,9 @@
 <?php
 
-class WishesItemGetListProcessor extends modObjectGetListProcessor
+class WishesGetListProcessor extends modObjectGetListProcessor
 {
-    public $objectType = 'WishesItem';
-    public $classKey = 'WishesItem';
+    public $objectType = 'WishesItems';
+    public $classKey = 'WishesItems';
     public $defaultSortField = 'id';
     public $defaultSortDirection = 'DESC';
     //public $permission = 'list';
@@ -98,9 +98,30 @@ class WishesItemGetListProcessor extends modObjectGetListProcessor
             'menu' => true,
         ];
 
+		// export
+		$array['actions'][] = [
+			'cls' => '',
+			'icon' => 'icon icon-file-excel-o action-green',
+			'title' => $this->modx->lexicon('wishes_item_export'),
+			'multiple' => $this->modx->lexicon('wishes_item_export'),
+			'action' => 'exportItems',
+			'button' => true,
+			'menu' => true,
+		];
+
+		$array['actions'][] = [
+			'cls' => '',
+			'icon' => 'icon icon-file-excel-o action-grey',
+			'title' => $this->modx->lexicon('wishes_item_export'),
+			'multiple' => $this->modx->lexicon('wishes_item_export'),
+			'action' => 'exportItemsSmall',
+			'button' => true,
+			'menu' => true,
+		];
+
         return $array;
     }
 
 }
 
-return 'WishesItemGetListProcessor';
+return 'WishesGetListProcessor';

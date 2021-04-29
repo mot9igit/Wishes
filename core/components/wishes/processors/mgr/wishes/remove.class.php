@@ -1,11 +1,11 @@
 <?php
 
-class WishesItemDisableProcessor extends modObjectProcessor
+class WishesRemoveProcessor extends modObjectProcessor
 {
-    public $objectType = 'WishesItem';
-    public $classKey = 'WishesItem';
+    public $objectType = 'WishesItems';
+    public $classKey = 'WishesItems';
     public $languageTopics = ['wishes'];
-    //public $permission = 'save';
+    //public $permission = 'remove';
 
 
     /**
@@ -28,8 +28,7 @@ class WishesItemDisableProcessor extends modObjectProcessor
                 return $this->failure($this->modx->lexicon('wishes_item_err_nf'));
             }
 
-            $object->set('active', false);
-            $object->save();
+            $object->remove();
         }
 
         return $this->success();
@@ -37,4 +36,4 @@ class WishesItemDisableProcessor extends modObjectProcessor
 
 }
 
-return 'WishesItemDisableProcessor';
+return 'WishesRemoveProcessor';

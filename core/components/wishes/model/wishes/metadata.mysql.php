@@ -3,6 +3,7 @@
 $xpdo_meta_map = array (
   'xPDOSimpleObject' => 
   array (
-    0 => 'WishesItem',
+    0 => 'Wishes',
+    1 => 'WishesProducts',
   ),
 );

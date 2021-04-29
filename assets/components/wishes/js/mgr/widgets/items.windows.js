@@ -8,7 +8,7 @@ Wishes.window.CreateItem = function (config) {
         width: 550,
         autoHeight: true,
         url: Wishes.config.connector_url,
-        action: 'mgr/item/create',
+        action: 'mgr/wishes/create',
         fields: this.getFields(config),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
@@ -36,6 +36,12 @@ Ext.extend(Wishes.window.CreateItem, MODx.Window, {
             height: 150,
             anchor: '99%'
         }, {
+            xtype: 'wishesdates',
+            fieldLabel: _('wishes_item_endon'),
+            name: 'endon',
+            id: config.id + '-endon',
+            anchor: '99%'
+        }, {
             xtype: 'xcheckbox',
             boxLabel: _('wishes_item_active'),
             name: 'active',
@@ -61,7 +67,7 @@ Wishes.window.UpdateItem = function (config) {
         width: 550,
         autoHeight: true,
         url: Wishes.config.connector_url,
-        action: 'mgr/item/update',
+        action: 'mgr/wishes/update',
         fields: this.getFields(config),
         keys: [{
             key: Ext.EventObject.ENTER, shift: true, fn: function () {
@@ -92,6 +98,12 @@ Ext.extend(Wishes.window.UpdateItem, MODx.Window, {
             id: config.id + '-description',
             anchor: '99%',
             height: 150,
+        }, {
+            xtype: 'wishesdates',
+            fieldLabel: _('wishes_item_endon'),
+            name: 'endon',
+            id: config.id + '-endon',
+            anchor: '99%'
         }, {
             xtype: 'xcheckbox',
             boxLabel: _('wishes_item_active'),

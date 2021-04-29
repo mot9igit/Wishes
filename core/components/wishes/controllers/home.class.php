@@ -15,7 +15,8 @@ class WishesHomeManagerController extends modExtraManagerController
      */
     public function initialize()
     {
-        $this->Wishes = $this->modx->getService('Wishes', 'Wishes', MODX_CORE_PATH . 'components/wishes/model/');
+		$corePath = $this->modx->getOption('wishes_core_path', null, $this->modx->getOption('core_path') . 'components/wishes/');
+        $this->Wishes = $this->modx->getService('Wishes', 'Wishes', $corePath . 'model/');
         parent::initialize();
     }
 

@@ -44,5 +44,19 @@ Ext.extend(Wishes.combo.Search, Ext.form.TwinTriggerField, {
     },
 
 });
+Wishes.combo.Dates = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        hideTime: false
+        ,allowBlank: true
+        ,hiddenFormat:'Y-m-d H:i:s'
+        ,dateFormat: MODx.config.manager_date_format
+        ,dateWidth: 100
+    });
+    Wishes.combo.Dates.superclass.constructor.call(this,config);
+};
+Ext.extend(Wishes.combo.Dates, Ext.ux.form.DateTime);
+
+Ext.reg('wishesdates', Wishes.combo.Dates);
 Ext.reg('wishes-combo-search', Wishes.combo.Search);
 Ext.reg('wishes-field-search', Wishes.combo.Search);

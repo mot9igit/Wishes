@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="wishes" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" phpdoc-package="wishes"
        version="1.1">
-
-    <object class="WishesItem" table="wishes_items" extends="xPDOSimpleObject">
+    <object class="WishesItems" table="wishes_items" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="100" phptype="string" null="false" default=""/>
         <field key="description" dbtype="text" phptype="string" null="true" default=""/>
+
+        <field key="createdon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="createdby" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="editedon" dbtype="datetime" phptype="datetime" null="true"/>
+        <field key="editedby" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" default="0" />
+        <field key="endon" dbtype="datetime" phptype="datetime" null="true"/>
+
         <field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="true" default="1"/>
 
         <index alias="name" name="name" primary="false" unique="false" type="BTREE">
@@ -14,5 +20,28 @@
             <column key="active" length="" collation="A" null="false"/>
         </index>
     </object>
+    <object class="WishesProducts" table="wishes_products" extends="xPDOSimpleObject">
+        <field key="product_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false"/>
+        <field key="order_id" dbtype="int" precision="10" phptype="integer" null="false" default=""/>
+        <field key="wishes_id" dbtype="int" precision="10" phptype="integer" null="false" default=""/>
+        <field key="article" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="true"/>
+        <field key="count" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="true" default="1"/>
+        <field key="price" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="weight" dbtype="decimal" precision="13,3" phptype="float" null="true" default="0"/>
+        <field key="cost" dbtype="decimal" precision="12,2" phptype="float" null="true" default="0"/>
+        <field key="options" dbtype="text" phptype="json" null="true"/>
 
+        <index alias="product_id" name="product_id" primary="false" unique="false" type="BTREE">
+            <column key="product_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="order_id" name="order_id" primary="false" unique="false" type="BTREE">
+            <column key="order_id" length="" collation="A" null="false"/>
+        </index>
+        <index alias="wishes_id" name="wishes_id" primary="false" unique="false" type="BTREE">
+            <column key="wishes_id" length="" collation="A" null="false"/>
+        </index>
+        <aggregate alias="Order" class="msOrder" local="order_id" foreign="id" owner="foreign" cardinality="one"/>
+        <aggregate alias="Wishes" class="Wishes" local="wishes_id" foreign="id" owner="foreign" cardinality="one"/>
+    </object>
 </model>
